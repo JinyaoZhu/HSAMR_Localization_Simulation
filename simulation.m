@@ -60,7 +60,7 @@ for iter = 1:max_iter
         PP = simPlot(x,particles,E_x,params,map,line_map,h_graphic);
         PP.UpdatePlot(x,particles,E_x,parking_slot_out,time);
         h_title = title(sprintf('iteration:%d, time:%4.2f',iter,time));
-        pause;
+%         pause;
     end
     
     %run simulation
@@ -84,14 +84,14 @@ for iter = 1:max_iter
     z = measure_voltage(real_dist);
     % Particle Filter
 %     [E_x,particles] = particlefilter(particles,u,z,cstep,map,params,NUM_OF_PARTICLE);
-%     [E_x,running_state] = complementary_filter(E_x,u,light_sensor_meas,cstep,params,x);
-    E_x = ekf(E_x,u,real_dist,cstep,map,params);
+    [E_x,running_state] = complementary_filter(E_x,u,light_sensor_meas,cstep,params,x);
+%     E_x = ekf(E_x,u,real_dist,cstep,map,params);
     x_est_hist = [x_est_hist,E_x];
     t_hist = [t_hist,time];
     
     %parking slot detection
-%     [parking_slot_out,temp_data] = parking_slot_detection(E_x,running_state,real_dist(2),cstep);
-%     temp_data_hist = [temp_data_hist,temp_data];
+    [parking_slot_out,temp_data] = parking_slot_detection(E_x,running_state,real_dist(2),cstep);
+    temp_data_hist = [temp_data_hist,temp_data];
     %plot robot
     PP.UpdatePlot(x,particles,E_x,parking_slot_out,time);
     set(h_title, 'String', sprintf('x:%4.1fcm,  y:%4.1fcm,  theta=%4.2fdegrees,  time:%4.2f s',...

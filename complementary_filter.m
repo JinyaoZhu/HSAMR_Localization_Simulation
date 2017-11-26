@@ -29,10 +29,10 @@ end
 E_x = x + dt*carEOM(x,u+0.5*randn(2,1)-rand(2,1)*0.3,params);
 E_x(3) = warp_to_pi(E_x(3));
 
-persistent conner_trigger;
+persistent corner_trigger;
 
-if(isempty(conner_trigger))
-    conner_trigger = 0;
+if(isempty(corner_trigger))
+    corner_trigger = 0;
 end
 
 persistent last_diff;
@@ -43,15 +43,15 @@ end
 diff = u(1)-u(2);
 if(diff)>0
     if(last_diff < 0)
-        conner_trigger = 1;
+        corner_trigger = 1;
     else
-        conner_trigger = conner_trigger+1;
+        corner_trigger = corner_trigger+1;
     end
 elseif(diff)<0
     if(last_diff > 0)
-        conner_trigger = -1;
+        corner_trigger = -1;
     else
-        conner_trigger = conner_trigger-1;
+        corner_trigger = corner_trigger-1;
     end
 end
 
@@ -62,8 +62,8 @@ if isempty(state_change_time)
 end
 
 % update estimated state when the robot reach the conner
-if(abs(conner_trigger) > 25 && state_change_time > 2)
-    conner_trigger = 0;
+if(abs(corner_trigger) > 25 && state_change_time > 2)
+    corner_trigger = 0;
     state_change_time = 0;
     state = state+1;
     if(state > length(waypoints))
@@ -72,7 +72,7 @@ if(abs(conner_trigger) > 25 && state_change_time > 2)
     
     %     E_x(1:2) = E_x(1:2) + 1.0*(update_points(state,1:2)' - E_x(1:2));
     %     E_x(3) = E_x(3) + 1.0*(warp_to_pi(update_points(state,3) - E_x(3)));
-elseif(abs(conner_trigger) < 10)
+elseif(abs(corner_trigger) < 10)
 %      % update robot heading with the light sensors
     if z(1) == 1 && z(2)==0
         E_x(3) = E_x(3) + 0.1*(warp_to_pi(target_theta(state)+0.17 - E_x(3)));
