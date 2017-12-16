@@ -5,7 +5,7 @@ to run the simulation - run "runsim.m"
 
 the main routine is in the file "simulation.m"
 
-simulation video:\
+## Simulation video:  
 https://www.youtube.com/watch?v=YV7jzGqWjug without filter \
 https://www.youtube.com/watch?v=NZ7Tg8C-g48 with particle filter \
 https://www.youtube.com/watch?v=EpvuckrovGw with comlementary filter \
