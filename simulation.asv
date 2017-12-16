@@ -71,23 +71,20 @@ for iter = 1:max_iter
     light_sensor_meas = get_light_sensor(x,params,line_map);
      
     %differential equaltion
-    [~,xsave] =ode45(@(t,s) carEOM(s,u,params),timeint,x);
+    [~,xsave] =ode45(@(t,s) carEOM(s,u+params.ENCODER_NOISE*randn(2,1),params),timeint,x);
     x = xsave(end,:)';
     x(3)=warp_to_pi(x(3));
     
     x_hist = [x_hist,x];
-    
-    % encoder measurement
-    u_measure = u+params.ENCODER_NOISE*randn(2,1);
 
     [~,real_dist] = get_sensor(sensor_pos(x,params),map,params); %simulated measurements
     real_dist = real_dist+params.IR_NOISE*randn(4,1);
     measurement_hist = [measurement_hist,real_dist];
     z = measure_voltage(real_dist,params);
     % Particle Filter
-%     [E_x,particles] = particlefilter(particles,u_measure,z,cstep,map,params,NUM_OF_PARTICLE);
-%     [E_x,running_state] = complementary_filter(E_x,u_measure,light_sensor_meas,cstep,params,x);
-    E_x = ekf(E_x,u_measure,real_dist,cstep,map,params);
+     [E_x,particles] = particlefilter(particles,u,z,cstep,map,params,NUM_OF_PARTICLE);
+%    [E_x,running_state] = complementary_filter(E_x,u,light_sensor_meas,cstep,params,x);
+%     E_x = ekf(E_x,u,real_dist,cstep,map,params);
     x_est_hist = [x_est_hist,E_x];
     t_hist = [t_hist,time];
     

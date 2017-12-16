@@ -1,7 +1,7 @@
 function [E_x,new_particles] = particlefilter(particles,u,z,dt,map,params,num_of_particle)
 
 for i = 1 : num_of_particle
-    particles(1:3,i) = carEOM(particles(1:3,i),u+0.5*(randn(2,1)-0.0),params)*dt + particles(1:3,i);
+    particles(1:3,i) = carEOM(particles(1:3,i),u,params)*dt + particles(1:3,i);
     
     if particles(1,i) > params.MAP_X_MAX
         particles(1,i) = params.MAP_X_MAX;
@@ -17,9 +17,9 @@ for i = 1 : num_of_particle
     end
      particles(3,i) = warp_to_pi( particles(3,i));
      
-    [~,predicted_z] = get_sensor(sensor_pos(particles(1:3,i),params),map);
-    predicted_z = predicted_z+ 2*randn(4,1);
-    predicted_z = measure_voltage(predicted_z);
+    [~,predicted_z] = get_sensor(sensor_pos(particles(1:3,i),params),map,params);
+    predicted_z = predicted_z+ params.IR_NOISE*randn(4,1);
+    predicted_z = measure_voltage(predicted_z,params);
     e = max(0.01,norm(z - predicted_z));
 %     e = norm(z - predicted_z);
     particles(4,i) = 1/e;% update weights

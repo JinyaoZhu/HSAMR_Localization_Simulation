@@ -71,7 +71,7 @@ classdef simPlot < handle
             P.h_car = plot(P.pos_car(1,1:5),P.pos_car(2,1:5),'blue','Linewidth',1);
             P.h_car_center = scatter(P.pos_car(1,6),P.pos_car(2,6),'blue','Linewidth',1);
             
-            [endpoints,~] = get_sensor(P.pos_sensor,P.map);
+            [endpoints,~] = get_sensor(P.pos_sensor,P.map, P.params);
             P.h_sensor_1 =  plot([P.pos_sensor(1,1),endpoints(1,1)],[P.pos_sensor(2,1),endpoints(2,1)],'--','Color',[1,0,0],'Linewidth',0.5);
             P.h_sensor_2 =  plot([P.pos_sensor(1,2),endpoints(1,2)],[P.pos_sensor(2,2),endpoints(2,2)],'--','Color',[1,0,0],'Linewidth',0.5);
             P.h_sensor_3 =  plot([P.pos_sensor(1,3),endpoints(1,3)],[P.pos_sensor(2,3),endpoints(2,3)],'--','Color',[1,0,0],'Linewidth',0.5);
@@ -114,7 +114,7 @@ classdef simPlot < handle
             set(P.h_car_center,'XData',P.pos_car(1,6),...
                 'YData',P.pos_car(2,6));
             
-            [endpoints,~] = get_sensor(P.pos_sensor,P.map);
+            [endpoints,~] = get_sensor(P.pos_sensor,P.map, P.params);
             
             set(P.h_sensor_1,'XData',[P.pos_sensor(1,1),endpoints(1,1)],...
                 'YData',[P.pos_sensor(2,1),endpoints(2,1)]);
@@ -134,23 +134,23 @@ classdef simPlot < handle
             set(P.h_state_hist,'XData',P.state_hist(1,:),'YData',P.state_hist(2,:));
             set(P.h_est_state_hist,'XData',P.est_state_hist(1,:),'YData',P.est_state_hist(2,:));
             
-            
-            if(parking_slot(4,1) ~= 0)
-                set(P.h_parking_slot_1,'Position',...
-                [parking_slot(1,1),parking_slot(2,1)-15,parking_slot(3,1)-parking_slot(1,1),15]);
-            end
-            if(parking_slot(4,2) ~= 0)
-                set(P.h_parking_slot_2,'Position',...
-                [parking_slot(1,2),parking_slot(2,2)-15,parking_slot(3,2)-parking_slot(1,2),15]);
-            end
-            if(parking_slot(4,3) ~= 0)
-                set(P.h_parking_slot_3,'Position',...
-                [parking_slot(1,3),parking_slot(2,3),15,parking_slot(4,3)-parking_slot(2,3)]);
-            end
-            if(parking_slot(4,4) ~= 0)
-                set(P.h_parking_slot_4,'Position',...
-                [parking_slot(3,4),parking_slot(4,4),parking_slot(1,4)-parking_slot(3,4),15]);
-            end
+            % display parking slot
+%             if(parking_slot(4,1) ~= 0)
+%                 set(P.h_parking_slot_1,'Position',...
+%                 [parking_slot(1,1),parking_slot(2,1)-15,parking_slot(3,1)-parking_slot(1,1),15]);
+%             end
+%             if(parking_slot(4,2) ~= 0)
+%                 set(P.h_parking_slot_2,'Position',...
+%                 [parking_slot(1,2),parking_slot(2,2)-15,parking_slot(3,2)-parking_slot(1,2),15]);
+%             end
+%             if(parking_slot(4,3) ~= 0)
+%                 set(P.h_parking_slot_3,'Position',...
+%                 [parking_slot(1,3),parking_slot(2,3),15,parking_slot(4,3)-parking_slot(2,3)]);
+%             end
+%             if(parking_slot(4,4) ~= 0)
+%                 set(P.h_parking_slot_4,'Position',...
+%                 [parking_slot(3,4),parking_slot(4,4),parking_slot(1,4)-parking_slot(3,4),15]);
+%             end
             
             drawnow;
         end

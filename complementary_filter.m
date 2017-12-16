@@ -26,7 +26,7 @@ if(isempty(state))
 end
 
 % prior estimation
-E_x = x + dt*carEOM(x,u+0.5*randn(2,1)-rand(2,1)*0.3,params);
+E_x = x + dt*carEOM(x,u,params);
 E_x(3) = warp_to_pi(E_x(3));
 
 persistent corner_trigger;
@@ -62,7 +62,7 @@ if isempty(state_change_time)
 end
 
 % update estimated state when the robot reach the conner
-if(abs(corner_trigger) > 25 && state_change_time > 2)
+if(abs(corner_trigger) > 20 && state_change_time > 2)
     corner_trigger = 0;
     state_change_time = 0;
     state = state+1;

@@ -1,4 +1,4 @@
-function [endpoint,distance] = get_scan_dist(pose,map)
+function [endpoint,distance] = get_scan_dist(pose,map, max_range)
 x0 = pose(1);
 y0 = pose(2);
 theta = pose(3);
@@ -14,6 +14,12 @@ MAP_XY_MIN = 1;
 while (true)
     
     if x>MAP_X_MAX||y>MAP_Y_MAX||x<MAP_XY_MIN||y<MAP_XY_MIN
+        break;
+    end
+    
+    dx = x - x0;
+    dy = y - y0;
+    if(sqrt(dx*dx+dy*dy) >= max_range)
         break;
     end
     
@@ -36,6 +42,7 @@ while (true)
         x = x - 1;
     end
 end
+
 dx = x - x0;
 dy = y - y0;
 

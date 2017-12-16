@@ -1,7 +1,7 @@
-function v = measure_voltage(dist)
+function v = measure_voltage(dist,params)
 v = zeros(4,1);
-MIN_DIST = 5;
-MAX_DIST = 80;
+MIN_DIST = params.MIN_IR_RANGE;
+MAX_DIST = params.MAX_IR_RANGE;
 if dist(1) <= MIN_DIST
     v(1) = 0.66*dist(1);
 elseif dist(1) < MAX_DIST

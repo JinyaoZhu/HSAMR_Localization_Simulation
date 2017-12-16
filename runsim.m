@@ -31,12 +31,12 @@ plot(t,(error_angle));
 title('\theta error(rad)')
 grid;
 
-figure(3)
-plot(t,measurement_hist(2,:),t,measurement_hist(3,:));
-xlabel('t/s');
-ylabel('d/cm');
-legend('sensor2','sensor3');
-grid;
+% figure(3)
+% plot(t,measurement_hist(2,:),t,measurement_hist(3,:));
+% xlabel('t/s');
+% ylabel('d/cm');
+% legend('sensor2','sensor3');
+% grid;
 
 % figure(4)
 % plot(t,temp_data_hist(1,:));
