@@ -18,8 +18,8 @@ ylabel('Y [cm]');
 set(gcf,'Renderer','opengl');
 %% **************************Initial Condition*********************
 disp('Setting initial conditions...')
-tstep = 0.025;
-cstep = 0.050;
+tstep = 0.03;
+cstep = 0.03;
 max_time = 50;
 max_iter = max_time/cstep;
 time = 0;
@@ -30,8 +30,10 @@ measurement_hist = [];
 
 temp_data_hist = [];
 
-x0 = [30;45;0]; %inital state
-target_x = [250;40;0];
+x0 = [60; 45; 0]; %inital state
+target_x = [120,80,0;
+            200,45,0;
+            200,100,pi/2];
 
 x = x0;
 E_x = x0;
@@ -60,7 +62,7 @@ for iter = 1:max_iter
         PP = simPlot(x,particles,E_x,params,map,line_map,h_graphic);
         PP.UpdatePlot(x,particles,E_x,parking_slot_out,time);
         h_title = title(sprintf('iteration:%d, time:%4.2f',iter,time));
-%         pause;
+         pause;
     end
     
     %run simulation
@@ -85,9 +87,9 @@ for iter = 1:max_iter
     measurement_hist = [measurement_hist,real_dist];
     z = measure_voltage(real_dist,params);
     % Particle Filter
-     [E_x,particles] = particlefilter(particles,u_measure,z,cstep,map,params,NUM_OF_PARTICLE);
+%     [E_x,particles] = particlefilter(particles,u_measure,z,cstep,map,params,NUM_OF_PARTICLE);
 %     [E_x,running_state] = complementary_filter(E_x,u_measure,light_sensor_meas,cstep,params,x);
-%    E_x = ekf(E_x,u_measure,real_dist,cstep,map,params);
+    E_x = ekf(E_x,u_measure,real_dist,cstep,map,params);
     x_est_hist = [x_est_hist,E_x];
     t_hist = [t_hist,time];
     
