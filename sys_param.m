@@ -11,7 +11,7 @@ params.ROBOT_LENGTH_Y = 10; %cm
 params.MAX_IR_RANGE = 80; %cm
 params.MIN_IR_RANGE = 10; %cm
 
-params.IR_NOISE = 1; % +- 1cm std normal PDF
+params.IR_NOISE = 0.5; % +- 1cm std normal PDF
 params.ENCODER_NOISE = 0.5; % +- rad/s
 
 % sensor pose in body frame

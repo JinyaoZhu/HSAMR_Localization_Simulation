@@ -86,10 +86,12 @@ for iter = 1:max_iter
     real_dist = real_dist+params.IR_NOISE*randn(4,1);
     measurement_hist = [measurement_hist,real_dist];
     z = measure_voltage(real_dist,params);
+    
     % Particle Filter
 %     [E_x,particles] = particlefilter(particles,u_measure,z,cstep,map,params,NUM_OF_PARTICLE);
 %     [E_x,running_state] = complementary_filter(E_x,u_measure,light_sensor_meas,cstep,params,x);
     E_x = ekf(E_x,u_measure,real_dist,cstep,map,params);
+    
     x_est_hist = [x_est_hist,E_x];
     t_hist = [t_hist,time];
     
